@@ -285,12 +285,16 @@ app.use((req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-// Start Server
-app.listen(PORT, () => {
-  console.log('================================================================');
-  console.log(`🚀 e-LKPD Fullstack Server running at http://localhost:${PORT}`);
-  console.log(`📱 Modul Siswa (Multi-step): http://localhost:${PORT}`);
-  console.log(`👨‍🏫 Modul Guru (/admin):     http://localhost:${PORT}/admin`);
-  console.log(`🔑 Password Default Guru:   ${ADMIN_PASSWORD}`);
-  console.log('================================================================');
-});
+// Start Server if not imported by serverless function
+if (process.env.VERCEL !== '1') {
+  app.listen(PORT, () => {
+    console.log('================================================================');
+    console.log(`🚀 e-LKPD Fullstack Server running at http://localhost:${PORT}`);
+    console.log(`📱 Modul Siswa (Multi-step): http://localhost:${PORT}`);
+    console.log(`👨‍🏫 Modul Guru (/admin):     http://localhost:${PORT}/admin`);
+    console.log(`🔑 Password Default Guru:   ${ADMIN_PASSWORD}`);
+    console.log('================================================================');
+  });
+}
+
+module.exports = app;
