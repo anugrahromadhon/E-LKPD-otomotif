@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portal Guru e-LKPD - Rekapitulasi & Penilaian</title>
+  
+  <!-- Font Awesome 6 & Google Fonts -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  
+  <!-- Admin Stylesheet -->
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+
+  <!-- =========================================================================
+       1. LOGIN SECTION (Guru Only)
+       ========================================================================= -->
+  <div class="login-wrapper" id="loginWrapper">
+    <div class="login-card">
+      <div class="login-header">
+        <div class="login-header-icon">
+          <i class="fas fa-chalkboard-user"></i>
+        </div>
+        <h2>Portal Guru e-LKPD</h2>
+        <p>Rekapitulasi Nilai & Analisis Hasil Belajar Siswa (PMR Otomotif)</p>
+      </div>
+
+      <div class="login-body">
+        <div class="login-alert error" id="loginAlert">
+          <i class="fas fa-exclamation-triangle"></i>
+          <span id="loginAlertText">PIN/Password salah. Silakan coba lagi.</span>
+        </div>
+
+        <form id="adminLoginForm">
+          <div class="form-group">
+            <label for="adminPassword"><i class="fas fa-key"></i> Masukkan PIN / Password Guru</label>
+            <input type="password" id="adminPassword" class="form-control" placeholder="Default: admin123" required autocomplete="current-password">
+          </div>
+
+          <button type="submit" class="btn-admin" id="btnLoginSubmit">
+            <i class="fas fa-right-to-bracket"></i> Masuk ke Dashboard
+          </button>
+        </form>
+
+        <div style="margin-top: 1.5rem; text-align: center;">
+          <a href="/" style="color: #64748b; font-size: 0.85rem; text-decoration: none;">
+            <i class="fas fa-arrow-left"></i> Kembali ke Halaman Siswa
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       2. ADMIN DASHBOARD SECTION
+       ========================================================================= -->
+  <div class="admin-app" id="adminApp">
+    
+    <!-- Top Navbar -->
+    <header class="admin-navbar">
+      <div class="admin-brand">
+        <div class="brand-icon-box">
+          <i class="fas fa-wrench"></i>
+        </div>
+        <div class="brand-text">
+          <h1>e-LKPD Dashboard Guru</h1>
+          <span>Barisan & Deret Aritmatika (PMR Otomotif)</span>
+        </div>
+      </div>
+
+      <div class="admin-nav-actions">
+        <a href="/" target="_blank" class="btn-nav-outline">
+          <i class="fas fa-external-link-alt"></i> Buka Tampilan Siswa
+        </a>
+        <button type="button" class="btn-logout" id="btnLogout">
+          <i class="fas fa-power-off"></i> Keluar
+        </button>
+      </div>
+    </header>
+
+    <main class="admin-container">
+      
+      <!-- Stats Summary Cards -->
+      <section class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon blue">
+            <i class="fas fa-users"></i>
+          </div>
+          <div class="stat-info">
+            <div class="stat-value" id="statTotalSiswa">0</div>
+            <div class="stat-label">Total Siswa Mengumpulkan</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon gold">
+            <i class="fas fa-chart-line"></i>
+          </div>
+          <div class="stat-info">
+            <div class="stat-value" id="statRataRata">0</div>
+            <div class="stat-label">Rata-rata Skor (0-100)</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon green">
+            <i class="fas fa-trophy"></i>
+          </div>
+          <div class="stat-info">
+            <div class="stat-value" id="statTertinggi">0</div>
+            <div class="stat-label">Skor Tertinggi</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon purple">
+            <i class="fas fa-graduation-cap"></i>
+          </div>
+          <div class="stat-info">
+            <div class="stat-value" id="statKetuntasan">0%</div>
+            <div class="stat-label">Ketuntasan (KKM &ge; 75)</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Table Toolbar & Filters -->
+      <section class="toolbar-card">
+        <div class="toolbar-filters">
+          <label style="font-size: 0.85rem; font-weight: 700; color: #475569;">
+            <i class="fas fa-filter"></i> Filter Kelas:
+          </label>
+          <select id="filterKelas" class="form-control" style="width: auto; padding: 0.5rem 0.85rem;">
+            <option value="ALL">Semua Kelas</option>
+          </select>
+
+          <label style="font-size: 0.85rem; font-weight: 700; color: #475569; margin-left: 0.5rem;">
+            <i class="fas fa-search"></i> Pencarian:
+          </label>
+          <input type="text" id="searchStudent" class="form-control" placeholder="Cari nama atau absen..." style="width: 220px; padding: 0.5rem 0.85rem;">
+        </div>
+
+        <div class="toolbar-actions">
+          <button type="button" class="btn-refresh" id="btnRefresh">
+            <i class="fas fa-rotate"></i> Muat Ulang
+          </button>
+          <button type="button" class="btn-export" id="btnExportExcel">
+            <i class="fas fa-file-excel"></i> Export to Excel (.xlsx)
+          </button>
+        </div>
+      </section>
+
+      <!-- Submissions Table Card -->
+      <section class="table-card">
+        <div class="table-responsive">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th style="width: 50px;">No</th>
+                <th>Waktu Pengumpulan</th>
+                <th>Nama Siswa</th>
+                <th>Kelas</th>
+                <th style="width: 70px;">Absen</th>
+                <th>Durasi</th>
+                <th>Total Skor</th>
+                <th>Predikat</th>
+                <th>Status KKM</th>
+                <th style="width: 130px; text-align: center;">Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="submissionsTableBody">
+              <!-- Dynamically populated rows -->
+            </tbody>
+          </table>
+        </div>
+
+        <div class="empty-table-state" id="emptyState" style="display: none;">
+          <i class="fas fa-folder-open"></i>
+          <h3>Belum Ada Data Pengumpulan</h3>
+          <p>Jawaban siswa yang telah dikirim melalui e-LKPD akan otomatis muncul di sini.</p>
+        </div>
+      </section>
+
+    </main>
+
+  </div>
+
+  <!-- =========================================================================
+       3. MODAL DETAIL JAWABAN SISWA
+       ========================================================================= -->
+  <div class="modal-admin-backdrop" id="detailModal">
+    <div class="modal-admin-card">
+      <div class="modal-admin-header">
+        <h3 style="font-size: 1.15rem; display: flex; align-items: center; gap: 0.5rem;">
+          <i class="fas fa-clipboard-user"></i> Rincian Jawaban Siswa
+        </h3>
+        <button type="button" class="btn-logout" id="btnCloseDetailModal" style="padding: 0.2rem 0.6rem; background: rgba(255,255,255,0.15); color: #fff; border: none; font-size: 1.2rem;">&times;</button>
+      </div>
+
+      <div class="modal-admin-body" id="detailModalBody">
+        <!-- Dynamically injected student details -->
+      </div>
+
+      <div class="modal-admin-footer">
+        <button type="button" class="btn-nav-outline" onclick="document.getElementById('detailModal').classList.remove('show');">
+          Tutup
+        </button>
+        <button type="button" class="btn-export" onclick="window.print();">
+          <i class="fas fa-print"></i> Cetak Lembar Jawaban Ini
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Admin Application Logic -->
+  <script src="js/admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,1488 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>e-LKPD Interaktif: Barisan dan Deret Aritmatika (PMR Otomotif)</title>
+  
+  <!-- Font Awesome 6 & Google Fonts -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  
+  <!-- MathJax Configuration & CDN for KaTeX/LaTeX Formula Rendering -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']],
+        processEscapes: true
+      },
+      options: {
+        enableMenu: false
+      }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <!-- Core Theme Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- =========================================================================
+       Top Sticky App Header
+       ========================================================================= -->
+  <header class="app-header">
+    <div class="header-container">
+      <div class="brand-wrapper">
+        <span class="brand-badge"><i class="fas fa-wrench"></i> SMK OTOMOTIF</span>
+        <h1 class="brand-title">e-LKPD <span>Barisan & Deret Aritmatika</span></h1>
+      </div>
+      <div class="header-actions">
+        <div class="score-chip" style="flex-direction: column; align-items: flex-start; gap: 0.2rem; padding: 0.5rem 0.85rem; min-width: 140px;">
+          <div style="display: flex; align-items: center; gap: 0.5rem; width: 100%;">
+            <i class="fas fa-trophy" style="color: var(--accent-gold);"></i>
+            <span style="font-size: 0.8rem;">Skor LKPD:</span>
+            <strong id="headerTotalScore" style="color: var(--accent-gold); font-size: 1.1rem; margin-left: auto;">0</strong>
+            <span style="color: #64748b; font-size: 0.8rem;">/100</span>
+          </div>
+          <div class="score-progress-bar" style="width: 100%;">
+            <div class="score-progress-fill" id="headerProgressBar" style="width: 0%;"></div>
+          </div>
+        </div>
+
+        <a href="/admin" class="btn btn-outline btn-sm" style="color: #ffffff; border-color: rgba(255,255,255,0.4);" title="Portal Guru">
+          <i class="fas fa-chalkboard-user"></i> Portal Guru
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- =========================================================================
+       Sticky Multi-Step Wizard Navigation & Timer Bar
+       ========================================================================= -->
+  <nav class="wizard-header-sticky" id="wizardStickyNav">
+    <div class="wizard-header-inner">
+      <div class="wizard-step-info">
+        <span class="wizard-step-badge" id="wizardStepBadge">
+          <i class="fas fa-layer-group"></i> Langkah 1 / 9
+        </span>
+        <span class="wizard-step-title" id="wizardStepTitle">
+          Cover & Identitas Siswa
+        </span>
+      </div>
+
+      <div style="display: flex; align-items: center; gap: 1rem;">
+        <div class="wizard-timer-box" id="wizardTimerBox">
+          <i class="fas fa-stopwatch" style="color: var(--accent-gold);"></i>
+          <span id="wizardTimerDisplay">00:00</span>
+        </div>
+
+        <div class="wizard-dots-track" id="wizardDotsTrack">
+          <button type="button" class="wizard-dot-btn active" data-step="1" title="Langkah 1: Identitas">1</button>
+          <button type="button" class="wizard-dot-btn" data-step="2" title="Langkah 2: Mengamati">2</button>
+          <button type="button" class="wizard-dot-btn" data-step="3" title="Langkah 3: Aktivitas 1">3</button>
+          <button type="button" class="wizard-dot-btn" data-step="4" title="Langkah 4: Aktivitas 2">4</button>
+          <button type="button" class="wizard-dot-btn" data-step="5" title="Langkah 5: Aktivitas 3">5</button>
+          <button type="button" class="wizard-dot-btn" data-step="6" title="Langkah 6: Aktivitas 4">6</button>
+          <button type="button" class="wizard-dot-btn" data-step="7" title="Langkah 7: Aktivitas 5">7</button>
+          <button type="button" class="wizard-dot-btn" data-step="8" title="Langkah 8: Aktivitas 6">8</button>
+          <button type="button" class="wizard-dot-btn" data-step="9" title="Langkah 9: Kumpul">9</button>
+        </div>
+      </div>
+
+      <div class="wizard-progress-bar-wrap">
+        <div class="wizard-progress-bar-fill" id="wizardProgressBarFill" style="width: 11%;"></div>
+      </div>
+    </div>
+  </nav>
+
+  <main class="main-wrapper">
+
+    <!-- =======================================================================
+         STEP 1: COVER & IDENTITAS SISWA (Page 1 & 2)
+         ======================================================================= -->
+    <div class="wizard-step active" id="step-1" data-step="1">
+      <section class="cover-hero" id="section-cover">
+        <div class="cover-top-ribbon">
+          <div class="grade-badge-smk">
+            <i class="fas fa-graduation-cap"></i> SMK KELAS XI
+          </div>
+          <div class="pmr-pill">
+            <i class="fas fa-lightbulb"></i> BERBASIS PMR (REALISTIK)
+          </div>
+        </div>
+
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 1.5rem;">
+          <div style="flex: 1; min-width: 280px;">
+            <h1 class="cover-main-title">
+              LKPD INTERAKTIF<br>
+              <span>BARISAN DAN DERET ARITMATIKA</span>
+            </h1>
+            <p class="cover-subtitle">
+              <i class="fas fa-oil-can" style="color: var(--accent-gold);"></i>
+              Penerapan Kontekstual Masalah Servis Berkala & Pergantian Oli Kendaraan
+            </p>
+            <div class="cover-context-box">
+              <i class="fas fa-car-side"></i> Konteks: Jadwal Servis & Catatan Riwayat Kendaraan (Service Record)
+            </div>
+          </div>
+          <div style="max-width: 220px; text-align: center; flex-shrink: 0;" class="cover-badge-art">
+            <img src="assets/lkpd_cover_decor.png" alt="Ilustrasi Cover LKPD" style="max-width: 100%; height: auto; border-radius: var(--radius-md); box-shadow: 0 4px 15px rgba(0,0,0,0.4); border: 2px solid rgba(245, 158, 11, 0.6); background: rgba(255,255,255,0.05);">
+          </div>
+        </div>
+
+        <!-- Student Identification Form -->
+        <div class="student-id-card">
+          <h3 class="student-id-title">
+            <i class="fas fa-user-edit"></i> IDENTITAS PESERTA DIDIK
+          </h3>
+          <p style="font-size: 0.85rem; color: #94a3b8; margin-bottom: 1.25rem;">
+            Silakan lengkapi identitasmu dengan benar. Tombol <strong>"Mulai Pengerjaan"</strong> akan aktif otomatis setelah semua field wajib terisi.
+          </p>
+
+          <div class="student-grid">
+            <div class="id-field-group">
+              <label for="studentName"><i class="fas fa-user"></i> Nama Lengkap Siswa <span style="color: #f87171;">*</span></label>
+              <input type="text" id="studentName" placeholder="Contoh: Budi Santoso" required>
+            </div>
+            <div class="id-field-group">
+              <label for="studentClass"><i class="fas fa-school"></i> Kelas / Jurusan <span style="color: #f87171;">*</span></label>
+              <input type="text" id="studentClass" placeholder="Contoh: XI TKR 1 / Otomotif" required>
+            </div>
+            <div class="id-field-group">
+              <label for="studentAbsent"><i class="fas fa-list-ol"></i> Nomor Presensi / Absen <span style="color: #f87171;">*</span></label>
+              <input type="text" id="studentAbsent" placeholder="Contoh: 14" required>
+            </div>
+            <div class="id-field-group">
+              <label for="studentSchool"><i class="fas fa-building-columns"></i> Sekolah / Kelompok</label>
+              <input type="text" id="studentSchool" placeholder="Contoh: SMK Negeri 2">
+            </div>
+          </div>
+
+          <div style="text-align: center;">
+            <button type="button" class="btn-wizard-start" id="btnStartWizard" disabled>
+              <i class="fas fa-play"></i> Mulai Pengerjaan e-LKPD
+            </button>
+            <div id="identitasValidationHint" style="margin-top: 0.5rem; font-size: 0.8rem; color: #fca5a5;">
+              <i class="fas fa-circle-info"></i> Lengkapi Nama Lengkap, Kelas, dan No. Absen untuk mengaktifkan tombol.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PETUNJUK PENGGUNAAN (Page 2) -->
+      <section class="lkpd-card">
+        <div class="lkpd-card-header">
+          <div class="header-title-box">
+            <span class="activity-badge"><i class="fas fa-info-circle"></i> PANDUAN</span>
+            <h2 class="activity-title">Petunjuk Penggunaan e-LKPD</h2>
+          </div>
+        </div>
+        <div class="lkpd-card-body">
+          <div class="instruction-box">
+            <ol class="instruction-list">
+              <li>Baca setiap permasalahan kontekstual bengkel otomotif dengan teliti sebelum mengerjakannya.</li>
+              <li>Perhatikan informasi pada catatan riwayat servis (service record Toyota) dan setiap aktivitas pembelajaran.</li>
+              <li>Kerjakan setiap aktivitas secara berurutan langkah demi langkah menggunakan tombol navigasi di bagian bawah.</li>
+              <li>Gunakan <strong>fitur interaktif (form isian angka, simulasi odometer KM, dan drag-and-drop kartu rumus)</strong> pada bagian yang disediakan.</li>
+              <li>Tuliskan hasil perhitungan dan kesimpulan pada tempat yang tersedia secara mandiri.</li>
+              <li>Pada langkah akhir, periksa ringkasan jawabanmu dan klik tombol <em>"Kirim Jawaban ke Guru"</em> untuk dinilai secara otomatis.</li>
+            </ol>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- =======================================================================
+         STEP 2: AYO MENGAMATI - SERVIS BERKALA (Page 3)
+         ======================================================================= -->
+    <div class="wizard-step" id="step-2" data-step="2">
+      <section class="lkpd-card" id="section-observe">
+        <div class="lkpd-card-header">
+          <div class="header-title-box">
+            <span class="activity-badge"><i class="fas fa-eye"></i> PENGAMATAN</span>
+            <h2 class="activity-title">Ayo Mengamati: Servis Berkala Kendaraan</h2>
+          </div>
+        </div>
+        <div class="lkpd-card-body">
+          <div class="context-narrative">
+            <p>
+              Mobil digunakan untuk berbagai keperluan sehari-hari sehingga perlu dirawat melalui servis secara berkala.
+              Saat melakukan servis, <strong>mekanik perlu memperhatikan kondisi kendaraan dan jarak tempuh pada odometer</strong>.
+            </p>
+            <p style="margin-top: 0.5rem;">
+              Setiap mobil memiliki tingkat penggunaan yang berbeda sehingga pertambahan jarak tempuhnya juga dapat berbeda.
+              Catatan jarak tempuh dari beberapa kali servis dapat membantu mekanik mengetahui pola perubahan jarak tempuh kendaraan.
+            </p>
+          </div>
+
+          <!-- Real-world Workshop Illustration Banner -->
+          <div class="workshop-context-banner" style="display: flex; gap: 1.25rem; align-items: center; margin: 1.25rem 0; background: #f8fafc; border-radius: var(--radius-md); padding: 1rem; border: 1px solid var(--neutral-200); flex-wrap: wrap;">
+            <div style="flex: 1; min-width: 260px; max-width: 360px;">
+              <img src="assets/bengkel_mobil.jpg" alt="Suasana Bengkel Mobil dan Pemeriksaan Mekanik" style="width: 100%; height: auto; border-radius: var(--radius-sm); box-shadow: var(--shadow-sm); display: block;">
+              <span style="display: block; font-size: 0.75rem; color: #64748b; margin-top: 0.35rem; text-align: center;">
+                <i class="fas fa-camera"></i> Pemeriksaan Jarak Tempuh & Servis Berkala di Bengkel Resmi
+              </span>
+            </div>
+            <div style="flex: 2; min-width: 260px;">
+              <h4 style="color: var(--primary); margin-bottom: 0.5rem; font-size: 1.05rem;">
+                <i class="fas fa-tools"></i> Mengapa Catatan Servis Sangat Penting?
+              </h4>
+              <p style="font-size: 0.9rem; line-height: 1.5; color: var(--neutral-700); margin-bottom: 0.5rem;">
+                Bagi seorang mekanik profesional, riwayat servis bukan sekadar angka di atas kertas. Dari catatan tersebut, mekanik dapat memprediksi kapan pelumas mesin harus diganti, mengantisipasi keausan komponen bergerak, serta memastikan performa dan keselamatan kendaraan.
+              </p>
+              <div style="display: inline-flex; gap: 0.5rem; flex-wrap: wrap;">
+                <span class="badge" style="background: #e0f2fe; color: #0369a1; font-size: 0.75rem; font-weight: 700; padding: 4px 8px; border-radius: 4px;"><i class="fas fa-oil-can"></i> Interval 10.000 KM</span>
+                <span class="badge" style="background: #fef3c7; color: #92400e; font-size: 0.75rem; font-weight: 700; padding: 4px 8px; border-radius: 4px;"><i class="fas fa-calendar-check"></i> Interval 6 Bulan</span>
+                <span class="badge" style="background: #dcfce7; color: #15803d; font-size: 0.75rem; font-weight: 700; padding: 4px 8px; border-radius: 4px;"><i class="fas fa-calculator"></i> Konsep Barisan Aritmatika</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Interactive Odometer Simulator Widget -->
+          <div class="odometer-card">
+            <div class="odometer-header">
+              <span class="odometer-title">
+                <i class="fas fa-gauge-high"></i> SIMULATOR ODOMETER MOBIL PELANGGAN
+              </span>
+              <span id="odoServiceNo" style="font-weight: 700; color: var(--accent-gold);">Servis ke-1</span>
+            </div>
+
+            <div class="odometer-display-wrapper">
+              <div class="odometer-digits" id="odoDisplayKM">56.125</div>
+              <span class="odometer-unit">KM</span>
+            </div>
+
+            <p style="text-align: center; font-size: 0.85rem; color: #94a3b8; margin-bottom: 0.85rem;">
+              Klik tombol di bawah untuk menyimulasikan interval servis berkala tiap pertambahan 10.000 KM:
+            </p>
+
+            <div class="odometer-controls">
+              <button type="button" class="odo-btn" id="btnOdoPrev">
+                <i class="fas fa-backward-step"></i> -10.000 KM
+              </button>
+              <button type="button" class="odo-btn" id="btnOdoNext">
+                <i class="fas fa-forward-step"></i> +10.000 KM (Servis Berikutnya)
+              </button>
+              <button type="button" class="odo-btn" id="btnOdoReset">
+                <i class="fas fa-rotate-left"></i> Reset ke KM Awal (56.125 KM)
+              </button>
+            </div>
+          </div>
+
+          <!-- Video Observation Component -->
+          <div class="question-block">
+            <div class="question-prompt">
+              <span class="q-number"><i class="fas fa-video"></i></span>
+              <span><strong>Video Pengamatan Servis Berkala:</strong> Perhatikan proses pemeriksaan servis berkala mobil berikut.</span>
+            </div>
+            <div style="position: relative; padding-bottom: 45%; height: 0; overflow: hidden; border-radius: var(--radius-md); background: #000; margin: 1rem 0;">
+              <iframe 
+                src="https://www.youtube-nocookie.com/embed/O-L2d-s7K18?rel=0" 
+                title="Proses Servis Berkala Mobil" 
+                style="position: absolute; top:0; left: 0; width: 100%; height: 100%; border: 0;" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowfullscreen>
+              </iframe>
+            </div>
+
+            <div class="question-prompt" style="margin-top: 1rem;">
+              <span class="q-number">?</span>
+              <span>Setelah mengamati konteks dan video tersebut, menurutmu apa saja yang perlu diperhatikan sebagai seorang mekanik sebelum melakukan servis kendaraan?</span>
+            </div>
+            <textarea class="interactive-textarea" id="obs_mechanic_note" placeholder="Tuliskan pendapatmu di sini (misal: memeriksa riwayat servis, angka KM pada odometer, buku servis, kondisi oli mesin, filter, dan keluhan pengemudi)..."></textarea>
+          </div>
+        </div>
+      </section>
+
+      <!-- Step Navigation Footer -->
+      <div class="wizard-nav-footer">
+        <button type="button" class="btn-wizard-prev" onclick="goToStep(1)">
+          <i class="fas fa-arrow-left"></i> Kembali ke Identitas
+        </button>
+        <button type="button" class="btn-wizard-next" onclick="goToStep(3)">
+          Lanjut ke Aktivitas 1 <i class="fas fa-arrow-right"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- =======================================================================
+         STEP 3: AKTIVITAS 1 - MEMBACA SERVICE RECORD (Page 4 & 5)
+         ======================================================================= -->
+    <div class="wizard-step" id="step-3" data-step="3">
+      <section class="lkpd-card" id="section-act1">
+        <div class="lkpd-card-header">
+          <div class="header-title-box">
+            <span class="activity-badge"><i class="fas fa-book-open"></i> AKTIVITAS 1</span>
+            <h2 class="activity-title">Membaca dan Memahami Service Record</h2>
+          </div>
+          <span class="section-score-pill" id="scorePillAct1">0/10 Poin</span>
+        </div>
+        <div class="lkpd-card-body">
+          <div class="context-narrative">
+            <p>
+              <strong>Permasalahan:</strong> Kamu sedang bertugas sebagai mekanik di sebuah bengkel resmi. 
+              Seorang pelanggan datang membawa mobilnya untuk melakukan servis dan menyerahkan kartu <em>service record</em> mobil tersebut. 
+              Sebelum melakukan pemeriksaan teknis, kamu perlu memahami riwayat servis mobil agar pemeriksaan yang dilakukan tepat sasaran.
+            </p>
+          </div>
+
+          <div class="dialogue-bubble">
+            <div class="dialogue-speaker"><i class="fas fa-comment-dots"></i> Pertanyaan Pelanggan ke Mekanik:</div>
+            <div class="dialogue-text">
+              “Kalau mobil ini melakukan servis berikutnya, kira-kira pada KM berapa saya perlu membawanya ke bengkel? 
+              Kalau melihat catatan servis sebelumnya, berapa jumlah KM yang tercatat?”
+            </div>
+          </div>
+
+          <p style="font-weight: 600; margin-bottom: 0.75rem;">
+            Lengkapilah lembar catatan servis di sebelah kanan berdasarkan data asli pada foto <em>service record</em> di sebelah kiri:
+          </p>
+
+          <!-- Side-by-side Service Record Photo & Interactive Slip Form -->
+          <div class="service-record-container">
+            <!-- Photo Box with Toggleable Views -->
+            <div class="service-photo-box">
+              <div style="display: flex; gap: 0.5rem; margin-bottom: 0.5rem; flex-wrap: wrap;">
+                <button type="button" class="btn btn-sm btn-primary" id="btnShowPhotoCard" style="font-size: 0.75rem; padding: 4px 10px;">
+                  <i class="fas fa-id-card"></i> Foto Kartu Servis Asli
+                </button>
+                <button type="button" class="btn btn-sm btn-outline" id="btnShowFullForm" style="font-size: 0.75rem; padding: 4px 10px; background: #fff;">
+                  <i class="fas fa-file-invoice"></i> Lembar Form TMO (Hal. 5)
+                </button>
+              </div>
+              <div style="position: relative; text-align: center; background: #0f172a; border-radius: var(--radius-sm); overflow: hidden; padding: 4px;">
+                <img id="serviceRecordImg" src="assets/service_record_real.png" alt="Foto Asli Service Record Toyota" style="max-height: 380px; width: auto; max-width: 100%; display: inline-block; object-fit: contain; cursor: zoom-in;">
+              </div>
+              <div class="photo-caption" id="serviceRecordCaption">
+                <i class="fas fa-camera"></i> Foto Service Record Pelanggan (Perhatikan tanggal dan angka KM)
+              </div>
+            </div>
+
+            <!-- Interactive Digital Slip Form -->
+            <div class="service-slip-box">
+              <div class="slip-header">
+                <span class="slip-title"><i class="fas fa-file-invoice"></i> LEMBAR CATATAN SERVIS</span>
+                <span style="font-size: 0.75rem; background: #e0e7ff; color: #3730a3; padding: 2px 6px; border-radius: 4px; font-weight: 700;">TOYOTA SERVICE</span>
+              </div>
+
+              <div class="slip-row">
+                <div class="slip-field">
+                  <label>MASUK SERVIS (Tgl)</label>
+                  <input type="text" id="act1_masuk_tgl" placeholder="04-12-2021">
+                </div>
+                <div class="slip-field">
+                  <label>KM Masuk Servis</label>
+                  <input type="text" id="act1_masuk_km" placeholder="56.125">
+                </div>
+              </div>
+
+              <div class="slip-row">
+                <div class="slip-field">
+                  <label>KEMBALI SERVIS (Tgl/Bulan)</label>
+                  <input type="text" id="act1_kembali_tgl" placeholder="JUNI 2022">
+                </div>
+                <div class="slip-field">
+                  <label>KM Kembali Servis</label>
+                  <input type="text" id="act1_kembali_km" placeholder="66.125">
+                </div>
+              </div>
+
+              <div class="slip-field" style="margin-top: 0.5rem;">
+                <label>Jenis Oli Mesin Digunakan</label>
+                <input type="text" id="act1_oli_mesin" placeholder="TMO 10W-40 / TMO Full Synthetic">
+              </div>
+
+              <div class="slip-checkboxes">
+                <label class="slip-check-item">
+                  <input type="checkbox" id="act1_filter_oli"> Filter Oli (Diganti)
+                </label>
+                <label class="slip-check-item">
+                  <input type="checkbox" id="act1_oli_transmisi"> Oli Transmisi
+                </label>
+                <label class="slip-check-item">
+                  <input type="checkbox" id="act1_oli_gardan"> Oli Gardan
+                </label>
+                <label class="slip-check-item">
+                  <input type="checkbox" id="act1_lain"> Lain-lain
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Reflection Checklist (Page 6) -->
+          <div class="question-block">
+            <div class="question-prompt">
+              <span class="q-number">1</span>
+              <span>Periksa kembali catatan yang kamu tulis. Apakah semua informasi yang diperlukan untuk membantu menjawab pertanyaan pelanggan sudah tercatat?</span>
+            </div>
+            <div class="choice-group">
+              <label class="choice-label">
+                <input type="radio" name="act1_check_complete" value="ya">
+                <span>Ya, seluruh informasi KM dan jadwal servis sudah tercatat dengan lengkap.</span>
+              </label>
+              <label class="choice-label">
+                <input type="radio" name="act1_check_complete" value="belum">
+                <span>Belum, masih ada data servis yang belum tercatat.</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="section-feedback-box" id="feedbackBoxAct1"></div>
+
+          <div class="section-footer-actions">
+            <button type="button" class="btn btn-check-section" id="btnCheckAct1">
+              <i class="fas fa-check"></i> Periksa Bagian Ini
+            </button>
+            <button type="button" class="btn btn-outline btn-sm" id="btnToggleExplAct1">
+              <i class="fas fa-lightbulb"></i> Kunci & Pembahasan
+            </button>
+          </div>
+
+          <div class="explanation-panel" id="explPanelAct1">
+            <h4><i class="fas fa-info-circle"></i> Pembahasan Aktivitas 1:</h4>
+            <div class="explanation-steps">
+              <ul>
+                <li><strong>Masuk Servis:</strong> Tanggal <code>04-12-2021</code> dengan jarak tempuh <strong>56.125 KM</strong>.</li>
+                <li><strong>Kembali Servis:</strong> Bulan <code>JUNI 2022</code> dengan jarak tempuh <strong>66.125 KM</strong>.</li>
+                <li><strong>Pergantian Part:</strong> Oli Mesin dan Filter Oli telah diganti (diberi tanda centang pada lembar servis).</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Step Navigation Footer -->
+      <div class="wizard-nav-footer">
+        <button type="button" class="btn-wizard-prev" onclick="goToStep(2)">
+          <i class="fas fa-arrow-left"></i> Kembali ke Mengamati
+        </button>
+        <button type="button" class="btn-wizard-next" onclick="goToStep(4)">
+          Lanjut ke Aktivitas 2 <i class="fas fa-arrow-right"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- =======================================================================
+         STEP 4: AKTIVITAS 2 - POLA PERUBAHAN KM / BEDA (Page 7 & 8)
+         ======================================================================= -->
+    <div class="wizard-step" id="step-4" data-step="4">
+      <section class="lkpd-card" id="section-act2">
+        <div class="lkpd-card-header">
+          <div class="header-title-box">
+            <span class="activity-badge"><i class="fas fa-route"></i> AKTIVITAS 2</span>
+            <h2 class="activity-title">Menemukan Pola Perubahan Jarak Tempuh (Beda)</h2>
+          </div>
+          <span class="section-score-pill" id="scorePillAct2">0/15 Poin</span>
+        </div>
+        <div class="lkpd-card-body">
+          <div class="context-narrative">
+            <p>
+              Pada aktivitas sebelumnya, kamu telah mencatat jarak tempuh mobil saat masuk servis pertama dan jarak tempuh yang disarankan untuk servis berikutnya.
+              Sekarang, perhatikan kembali catatan tersebut untuk melihat pola perubahan jarak tempuhnya.
+            </p>
+          </div>
+
+          <div class="question-block">
+            <div class="question-prompt">
+              <span class="q-number">1</span>
+              <span>Berapa selisih jarak tempuh dari servis sebelumnya ke servis berikutnya? Tuliskan cara menghitungnya:</span>
+            </div>
+            <div class="formula-builder-box" style="justify-content: flex-start;">
+              <span>Selisih KM = </span>
+              <input type="text" class="interactive-input input-num" id="act2_calc_end" placeholder="66.125">
+              <span> &minus; </span>
+              <input type="text" class="interactive-input input-num" id="act2_calc_start" placeholder="56.125">
+              <span> = </span>
+              <input type="text" class="interactive-input input-num" id="act2_diff_km" placeholder="10.000">
+              <span class="formula-unit">KM</span>
+            </div>
+          </div>
+
+          <div class="question-block">
+            <div class="question-prompt">
+              <span class="q-number">2</span>
+              <span>Apakah dari selisih tersebut kamu dapat memprediksi jarak tempuh pada servis ke-3?</span>
+            </div>
+            <div class="choice-group">
+              <label class="choice-label">
+                <input type="radio" name="act2_can_predict" value="ya">
+                <span>Ya, dapat diprediksi karena terdapat pertambahan jarak tempuh yang tetap (teratur).</span>
+              </label>
+              <label class="choice-label">
+                <input type="radio" name="act2_can_predict" value="tidak">
+                <span>Tidak dapat diprediksi.</span>
+              </label>
+            </div>
+            <div style="margin-top: 0.75rem;">
+              <span>Jika Ya, pada KM berapa servis ke-3 sebaiknya dilakukan?</span>
+              <div style="display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 0.25rem;">
+                <input type="text" class="interactive-input input-num" id="act2_predict_km1" placeholder="76.125">
+                <span class="formula-unit">KM</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Table of Service Patterns (Page 8) -->
+          <div class="question-block">
+            <div class="question-prompt">
+              <span class="q-number">3</span>
+              <span>Tabel Pola Perubahan Jarak Tempuh Servis:</span>
+            </div>
+            <div class="table-responsive">
+              <table class="lkpd-table">
+                <thead>
+                  <tr>
+                    <th>Servis Ke-</th>
+                    <th>Jarak Tempuh (KM)</th>
+                    <th>Pola Pertambahan Jarak Tempuh (KM)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Servis 1</strong> (Awal)</td>
+                    <td><input type="text" class="interactive-input input-num" id="act2_tbl_prev" placeholder="56.125"></td>
+                    <td>Jarak tempuh awal (\(a\))</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Servis 2</strong></td>
+                    <td><input type="text" class="interactive-input input-num" id="act2_tbl_curr" placeholder="66.125"></td>
+                    <td>\( 56.125 + 10.000 \)</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Servis 3</strong></td>
+                    <td><input type="text" class="interactive-input input-num" id="act2_tbl_next1" placeholder="76.125"></td>
+                    <td>\( 66.125 + 10.000 = 56.125 + 2(10.000) \)</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Servis 4</strong></td>
+                    <td><input type="text" class="interactive-input input-num" id="act2_tbl_next2" placeholder="86.125"></td>
+                    <td>\( 76.125 + 10.000 = 56.125 + 3(10.000) \)</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div style="margin-top: 1rem;">
+              <span>Jika pola penggunaan mobil tersebut tetap sama, prediksi jarak tempuh pada servis berikutnya adalah:</span>
+              <div style="display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 0.25rem;">
+                <input type="text" class="interactive-input input-num" id="act2_predict_km2" placeholder="86.125">
+                <span class="formula-unit">KM</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="question-block">
+            <div class="question-prompt">
+              <span class="q-number">4</span>
+              <span>Pada catatan servis terdapat informasi jarak tempuh dan waktu (bulan). Apakah keduanya perlu dipertimbangkan saat menentukan jadwal servis? Mengapa?</span>
+            </div>
+            <div class="choice-group">
+              <label class="choice-label">
+                <input type="radio" name="act2_consider_both" value="ya">
+                <span>Ya, keduanya harus dipertimbangkan (mana yang tercapai lebih dulu: 10.000 KM atau 6 bulan).</span>
+              </label>
+              <label class="choice-label">
+                <input type="radio" name="act2_consider_both" value="tidak">
+                <span>Tidak, hanya jarak tempuh saja yang diperhatikan.</span>
+              </label>
+            </div>
+            <textarea class="interactive-textarea" id="act2_consider_reason" placeholder="Tuliskan alasan teknismu di sini (misal: oli mesin dapat mengalami oksidasi dan penurunan kualitas pelumasan seiring berjalannya waktu meskipun mobil jarang digunakan)..."></textarea>
+          </div>
+
+          <div class="section-feedback-box" id="feedbackBoxAct2"></div>
+
+          <div class="section-footer-actions">
+            <button type="button" class="btn btn-check-section" id="btnCheckAct2">
+              <i class="fas fa-check"></i> Periksa Bagian Ini
+            </button>
+            <button type="button" class="btn btn-outline btn-sm" id="btnToggleExplAct2">
+              <i class="fas fa-lightbulb"></i> Kunci & Pembahasan
+            </button>
+          </div>
+
+          <div class="explanation-panel" id="explPanelAct2">
+            <h4><i class="fas fa-info-circle"></i> Pembahasan Aktivitas 2:</h4>
+            <div class="explanation-steps">
+              <ul>
+                <li><strong>Selisih (Beda / \(b\)):</strong> \( 66.125 - 56.125 = \mathbf{10.000\text{ KM}} \).</li>
+                <li><strong>Prediksi Servis 3:</strong> \( 66.125 + 10.000 = \mathbf{76.125\text{ KM}} \).</li>
+                <li><strong>Prediksi Servis 4:</strong> \( 76.125 + 10.000 = \mathbf{86.125\text{ KM}} \).</li>
+                <li><strong>Prinsip Servis Otomotif:</strong> Waktu dan jarak tempuh keduanya wajib dipertimbangkan dengan prinsip "mana yang tercapai lebih dulu" (*whichever comes first*).</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Step Navigation Footer -->
+      <div class="wizard-nav-footer">
+        <button type="button" class="btn-wizard-prev" onclick="goToStep(3)">
+          <i class="fas fa-arrow-left"></i> Kembali ke Aktivitas 1
+        </button>
+        <button type="button" class="btn-wizard-next" onclick="goToStep(5)">
+          Lanjut ke Aktivitas 3 (Un) <i class="fas fa-arrow-right"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- =======================================================================
+         STEP 5: AKTIVITAS 3 - MENEMUKAN RUMUS SUKU KE-N (Un) (Page 9 & 10)
+         ======================================================================= -->
+    <div class="wizard-step" id="step-5" data-step="5">
+      <section class="lkpd-card" id="section-act3">
+        <div class="lkpd-card-header">
+          <div class="header-title-box">
+            <span class="activity-badge"><i class="fas fa-calculator"></i> AKTIVITAS 3</span>
+            <h2 class="activity-title">Menemukan Rumus Suku ke-n Barisan Aritmatika (\(U_n\))</h2>
+          </div>
+          <span class="section-score-pill" id="scorePillAct3">0/20 Poin</span>
+        </div>
+        <div class="lkpd-card-body">
+          <div class="context-narrative">
+            <p>
+              Jika pelanggan ingin mengetahui perkiraan jarak tempuh pada servis ke-20, apakah kita harus menghitungnya satu per satu dengan menambah 10.000 KM berulang kali?
+              Tentu memerlukan waktu yang cukup lama. Mari kita cari rumus umum suku ke-\(n\) (\(U_n\)).
+            </p>
+          </div>
+
+          <div class="question-block">
+            <div class="question-prompt">
+              <span class="q-number">1</span>
+              <span>Berapa jarak tempuh mobil pada servis ke-20 jika dihitung manual atau dengan pola pertambahan?</span>
+            </div>
+            <div style="display: inline-flex; align-items: center; gap: 0.5rem;">
+              <input type="text" class="interactive-input input-num" id="act3_servis20_manual" placeholder="246.125">
+              <span class="formula-unit">KM</span>
+            </div>
+
+            <div style="margin-top: 0.75rem;">
+              <span>Apakah ada cara yang lebih praktis untuk mengetahuinya tanpa menghitung satu per satu?</span>
+              <div class="choice-group" style="margin-top: 0.35rem;">
+                <label class="choice-label">
+                  <input type="radio" name="act3_practical_method" value="ada">
+                  <span>Ada, yaitu menggunakan rumus suku ke-n barisan aritmatika.</span>
+                </label>
+                <label class="choice-label">
+                  <input type="radio" name="act3_practical_method" value="tidak">
+                  <span>Tidak ada cara lain.</span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Formula Derivation Box -->
+          <div class="question-block">
+            <div class="question-prompt">
+              <span class="q-number">2</span>
+              <span>Perhatikan Pola Pembentukan Rumus Suku ke-\(n\):</span>
+            </div>
+            <div class="table-responsive">
+              <table class="lkpd-table">
+                <thead>
+                  <tr>
+                    <th>Suku</th>
+                    <th>Nilai Suku</th>
+                    <th>Pola Berdasarkan Suku Awal (\(a\)) & Beda (\(b\))</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>\( U_1 \)</td>
+                    <td>\( 56.125 \)</td>
+                    <td>\( a \)</td>
+                  </tr>
+                  <tr>
+                    <td>\( U_2 \)</td>
+                    <td>\( 66.125 \)</td>
+                    <td>\( a + b \)</td>
+                  </tr>
+                  <tr>
+                    <td>\( U_3 \)</td>
+                    <td>\( 76.125 \)</td>
+                    <td>\( a + 2b = a + (3 - 1)b \)</td>
+                  </tr>
+                  <tr>
+                    <td>\( U_4 \)</td>
+                    <td>\( 86.125 \)</td>
+                    <td>\( a + 3b = a + (4 - 1)b \)</td>
+                  </tr>
+                  <tr style="background: #eff6ff;">
+                    <td><strong>\( U_n \)</strong></td>
+                    <td colspan="2">
+                      <div class="formula-builder-box">
+                        <strong style="color: var(--primary); font-size: 1.2rem;">\( U_n \) = </strong>
+                        <input type="text" class="interactive-input input-sm" id="act3_f_a" placeholder="a">
+                        <span> + ( </span>
+                        <input type="text" class="interactive-input input-sm" id="act3_f_n" placeholder="n">
+                        <span> &minus; </span>
+                        <input type="text" class="interactive-input input-sm" id="act3_f_1" placeholder="1">
+                        <span> ) </span>
+                        <input type="text" class="interactive-input input-sm" id="act3_f_b" placeholder="b">
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Drag and Drop Matching 1: Un Symbols (Page 10) -->
+          <div class="question-block">
+            <div class="question-prompt">
+              <span class="q-number">3</span>
+              <span><strong>Drag-and-Drop / Cocokkan Makna Simbol Rumus \(U_n\):</strong> Tarik kartu istilah di bawah dan letakkan pada kotak simbol yang sesuai!</span>
+            </div>
+
+            <div class="dnd-container" data-dnd-id="dnd1">
+              <div class="dnd-header">
+                <span class="dnd-title"><i class="fas fa-hand-pointer"></i> Bank Pilihan Istilah (Tarik atau Klik Kartu Ini):</span>
+                <button type="button" class="dnd-reset-btn" data-reset-dnd="dnd1">
+                  <i class="fas fa-rotate-left"></i> Reset Kotak
+                </button>
+              </div>
+
+              <div class="draggable-bank" id="dnd1_bank">
+                <div class="drag-item" draggable="true" data-value="Suku Pertama" id="chip_a">
+                  <i class="fas fa-grip-vertical"></i> Suku Pertama (Nilai Awal)
+                </div>
+                <div class="drag-item" draggable="true" data-value="Beda" id="chip_b">
+                  <i class="fas fa-grip-vertical"></i> Beda (Selisih KM Tetap)
+                </div>
+                <div class="drag-item" draggable="true" data-value="Banyak Suku" id="chip_n">
+                  <i class="fas fa-grip-vertical"></i> Banyak Suku (Urutan Servis)
+                </div>
+                <div class="drag-item" draggable="true" data-value="Suku Ke-n" id="chip_un">
+                  <i class="fas fa-grip-vertical"></i> Suku Ke-n (KM Servis Tertentu)
+                </div>
+              </div>
+
+              <div class="drop-slots-grid">
+                <div class="drop-slot-card">
+                  <span class="slot-math-symbol">\( U_n \)</span>
+                  <div class="drop-zone" data-dnd-id="dnd1" data-slot-key="dnd1_un">
+                    <span class="drop-placeholder">Letakkan arti simbol \(U_n\) di sini</span>
+                  </div>
+                </div>
+
+                <div class="drop-slot-card">
+                  <span class="slot-math-symbol">\( a \)</span>
+                  <div class="drop-zone" data-dnd-id="dnd1" data-slot-key="dnd1_a">
+                    <span class="drop-placeholder">Letakkan arti simbol \(a\) di sini</span>
+                  </div>
+                </div>
+
+                <div class="drop-slot-card">
+                  <span class="slot-math-symbol">\( b \)</span>
+                  <div class="drop-zone" data-dnd-id="dnd1" data-slot-key="dnd1_b">
+                    <span class="drop-placeholder">Letakkan arti simbol \(b\) di sini</span>
+                  </div>
+                </div>
+
+                <div class="drop-slot-card">
+                  <span class="slot-math-symbol">\( n \)</span>
+                  <div class="drop-zone" data-dnd-id="dnd1" data-slot-key="dnd1_n">
+                    <span class="drop-placeholder">Letakkan arti simbol \(n\) di sini</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Application to Service 20 -->
+          <div class="question-block">
+            <div class="question-prompt">
+              <span class="q-number">4</span>
+              <span>Gunakan rumus \( U_n = a + (n - 1)b \) untuk menentukan jarak tempuh pada servis ke-20:</span>
+            </div>
+            <div style="background: #f8fafc; padding: 1rem; border-radius: var(--radius-sm); border: 1px solid var(--neutral-200); font-family: var(--font-mono); font-size: 0.9rem;">
+              \( U_{20} = 56.125 + (20 - 1) \times 10.000 \)
+              <br>\( U_{20} = 56.125 + (19 \times 10.000) \)
+              <br>\( U_{20} = 56.125 + 190.000 \)
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 0.5rem; margin-top: 0.75rem;">
+              <strong>Hasil \( U_{20} \) = </strong>
+              <input type="text" class="interactive-input input-num" id="act3_servis20_formula" placeholder="246.125">
+              <span class="formula-unit">KM</span>
+            </div>
+
+            <div style="margin-top: 0.75rem;">
+              <span>Apakah hasilnya sama dengan perhitungan awalmu?</span>
+              <div class="choice-group" style="margin-top: 0.35rem;">
+                <label class="choice-label">
+                  <input type="radio" name="act3_compare_result" value="sama">
+                  <span>Sama, hasilnya persis 246.125 KM.</span>
+                </label>
+                <label class="choice-label">
+                  <input type="radio" name="act3_compare_result" value="beda">
+                  <span>Berbeda.</span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="section-feedback-box" id="feedbackBoxAct3"></div>
+
+          <div class="section-footer-actions">
+            <button type="button" class="btn btn-check-section" id="btnCheckAct3">
+              <i class="fas fa-check"></i> Periksa Bagian Ini
+            </button>
+            <button type="button" class="btn btn-outline btn-sm" id="btnToggleExplAct3">
+              <i class="fas fa-lightbulb"></i> Kunci & Pembahasan
+            </button>
+          </div>
+
+          <div class="explanation-panel" id="explPanelAct3">
+            <h4><i class="fas fa-info-circle"></i> Pembahasan Aktivitas 3:</h4>
+            <div class="explanation-steps">
+              <ul>
+                <li><strong>Rumus Suku ke-\(n\):</strong> \( U_n = a + (n - 1)b \).</li>
+                <li><strong>Menentukan Servis ke-20:</strong>
+                  <br>\( U_{20} = 56.125 + (20 - 1)10.000 = 56.125 + 190.000 = \mathbf{246.125\text{ KM}} \).
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Step Navigation Footer -->
+      <div class="wizard-nav-footer">
+        <button type="button" class="btn-wizard-prev" onclick="goToStep(4)">
+          <i class="fas fa-arrow-left"></i> Kembali ke Aktivitas 2
+        </button>
+        <button type="button" class="btn-wizard-next" onclick="goToStep(6)">
+          Lanjut ke Aktivitas 4 <i class="fas fa-arrow-right"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- =======================================================================
+         STEP 6: AKTIVITAS 4 - PENGANTAR DERET ARITMATIKA (Page 11 & 12)
+         ======================================================================= -->
+    <div class="wizard-step" id="step-6" data-step="6">
+      <section class="lkpd-card" id="section-act4">
+        <div class="lkpd-card-header">
+          <div class="header-title-box">
+            <span class="activity-badge"><i class="fas fa-layer-group"></i> AKTIVITAS 4</span>
+            <h2 class="activity-title">Menghitung Jumlah Jarak Tempuh (Pengantar Deret)</h2>
+          </div>
+          <span class="section-score-pill" id="scorePillAct4">0/10 Poin</span>
+        </div>
+        <div class="lkpd-card-body">
+          <div class="context-narrative">
+            <p>
+              Seorang pemilik kendaraan ingin mengetahui <strong>total akumulasi seluruh jarak tempuh</strong> yang tercatat pada odometer dari servis ke-1 sampai servis ke-5.
+              Hal ini dilakukan untuk memperkirakan total keausan mesin dan biaya perawatan berkala.
+            </p>
+          </div>
+
+          <div class="question-block">
+            <div class="question-prompt">
+              <span class="q-number">1</span>
+              <span>Hitunglah jumlah jarak tempuh dari servis ke-1 sampai servis ke-5:</span>
+            </div>
+
+            <div style="background: #f8fafc; padding: 1rem; border-radius: var(--radius-sm); border: 1px solid var(--neutral-200); font-family: var(--font-mono); font-size: 0.9rem;">
+              Jumlah KM = 56.125 + 66.125 + 76.125 + 86.125 + 96.125
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 0.5rem; margin-top: 0.75rem;">
+              <strong>Total KM = </strong>
+              <input type="text" class="interactive-input input-num" id="act4_sum_5" placeholder="380.625">
+              <span class="formula-unit">KM</span>
+            </div>
+          </div>
+
+          <div class="question-block">
+            <div class="question-prompt">
+              <span class="q-number">2</span>
+              <span>Jika diminta menjumlahkan jarak tempuh hingga servis ke-50 atau ke-100, apakah cara menjumlahkan satu per satu masih efisien dan mudah dilakukan?</span>
+            </div>
+            <div class="choice-group">
+              <label class="choice-label">
+                <input type="radio" name="act4_easy_for_many" value="tidak">
+                <span>Tidak efisien, karena memakan waktu lama dan rawan terjadi kekeliruan hitung.</span>
+              </label>
+              <label class="choice-label">
+                <input type="radio" name="act4_easy_for_many" value="ya">
+                <span>Ya, masih mudah dan cepat.</span>
+              </label>
+            </div>
+            <textarea class="interactive-textarea" id="act4_easy_reason" placeholder="Tuliskan alasanmu (misal: dibutuhkan rumus praktis agar perhitungan jumlah banyak suku dapat selesai dalam hitungan detik)..."></textarea>
+          </div>
+
+          <div class="section-feedback-box" id="feedbackBoxAct4"></div>
+
+          <div class="section-footer-actions">
+            <button type="button" class="btn btn-check-section" id="btnCheckAct4">
+              <i class="fas fa-check"></i> Periksa Bagian Ini
+            </button>
+            <button type="button" class="btn btn-outline btn-sm" id="btnToggleExplAct4">
+              <i class="fas fa-lightbulb"></i> Kunci & Pembahasan
+            </button>
+          </div>
+
+          <div class="explanation-panel" id="explPanelAct4">
+            <h4><i class="fas fa-info-circle"></i> Pembahasan Aktivitas 4:</h4>
+            <div class="explanation-steps">
+              <ul>
+                <li>\( 56.125 + 66.125 + 76.125 + 86.125 + 96.125 = \mathbf{380.625\text{ KM}} \).</li>
+                <li>Menjumlahkan satu per satu untuk suku yang banyak (\(n\) besar) sangat tidak praktis, sehingga kita membutuhkan rumus <strong>Deret Aritmatika (\(S_n\))</strong>.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Step Navigation Footer -->
+      <div class="wizard-nav-footer">
+        <button type="button" class="btn-wizard-prev" onclick="goToStep(5)">
+          <i class="fas fa-arrow-left"></i> Kembali ke Aktivitas 3
+        </button>
+        <button type="button" class="btn-wizard-next" onclick="goToStep(7)">
+          Lanjut ke Aktivitas 5 (Sn) <i class="fas fa-arrow-right"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- =======================================================================
+         STEP 7: AKTIVITAS 5 - RUMUS DERET ARITMATIKA (Sn) (Page 13 & 14)
+         ======================================================================= -->
+    <div class="wizard-step" id="step-7" data-step="7">
+      <section class="lkpd-card" id="section-act5">
+        <div class="lkpd-card-header">
+          <div class="header-title-box">
+            <span class="activity-badge"><i class="fas fa-square-root-variable"></i> AKTIVITAS 5</span>
+            <h2 class="activity-title">Menemukan Rumus Deret Aritmatika (\(S_n\))</h2>
+          </div>
+          <span class="section-score-pill" id="scorePillAct5">0/25 Poin</span>
+        </div>
+        <div class="lkpd-card-body">
+          <div class="context-narrative">
+            <p>
+              Penjumlahan dari suku-suku suatu barisan aritmatika disebut dengan <strong>Deret Aritmatika (\(S_n\))</strong>.
+              Mari kita temukan rumus \(S_n\) dengan memanfaatkan metode penjumlahan berpasangan (metode Gauss).
+            </p>
+          </div>
+
+          <!-- Step by Step Sum Table (Page 13) -->
+          <div class="question-block">
+            <div class="question-prompt">
+              <span class="q-number">1</span>
+              <span>Lengkapilah Tabel Penjumlahan Deret Aritmatika:</span>
+            </div>
+            <div class="table-responsive">
+              <table class="lkpd-table">
+                <thead>
+                  <tr>
+                    <th>Banyak Servis (\(n\))</th>
+                    <th>Bentuk Penjumlahan Suku</th>
+                    <th>Jumlah (\(S_n\))</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>\( n = 1 \)</td>
+                    <td>\( U_1 = 56.125 \)</td>
+                    <td>\( 56.125 \)</td>
+                  </tr>
+                  <tr>
+                    <td>\( n = 2 \)</td>
+                    <td>\( 56.125 + 66.125 \)</td>
+                    <td><input type="text" class="interactive-input input-num" id="act5_s2" placeholder="122.250"></td>
+                  </tr>
+                  <tr>
+                    <td>\( n = 3 \)</td>
+                    <td>\( 56.125 + 66.125 + 76.125 \)</td>
+                    <td><input type="text" class="interactive-input input-num" id="act5_s3" placeholder="198.375"></td>
+                  </tr>
+                  <tr>
+                    <td>\( n = 4 \)</td>
+                    <td>\( 56.125 + 66.125 + 76.125 + 86.125 \)</td>
+                    <td><input type="text" class="interactive-input input-num" id="act5_s4" placeholder="284.500"></td>
+                  </tr>
+                  <tr>
+                    <td>\( n = 5 \)</td>
+                    <td>\( 56.125 + 66.125 + 76.125 + 86.125 + 96.125 \)</td>
+                    <td><input type="text" class="interactive-input input-num" id="act5_s5" placeholder="380.625"></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Pairwise Gauss Logic -->
+          <div class="question-block">
+            <div class="question-prompt">
+              <span class="q-number">2</span>
+              <span>Penalaran Metode Penjumlahan Berpasangan (Gauss):</span>
+            </div>
+            <p style="font-size: 0.9rem; line-height: 1.6;">
+              Jika kita menuliskan deret secara maju dan mundur:
+              <br>\( S_n = U_1 + U_2 + \dots + U_n \)
+              <br>\( S_n = U_n + U_{n-1} + \dots + U_1 \)
+              <br>Ketika dijumlahkan, setiap pasangan suku menghasilkan nilai yang sama yaitu \( (a + U_n) \).
+              <br>Berapa banyak pasangan yang terbentuk untuk \(n\) suku? Ada 
+              <input type="text" class="interactive-input input-sm" id="act5_gauss_pairs" placeholder="n"> pasangan.
+            </p>
+
+            <div style="background: #f8fafc; padding: 1rem; border-radius: var(--radius-sm); border: 1px solid var(--neutral-200); margin-top: 0.75rem;">
+              \( 2S_n = n(a + U_n) \implies S_n = \frac{n}{2}(a + U_n) \)
+            </div>
+
+            <p style="font-size: 0.9rem; margin-top: 0.75rem;">
+              Substitusikan \( U_n = a + (n - 1)b \) ke dalam rumus di atas:
+            </p>
+            <div class="formula-builder-box">
+              <span>\( S_n = \frac{n}{2} ( \)</span>
+              <input type="text" class="interactive-input input-sm" id="act5_f_2a" placeholder="2a">
+              <span> + (n &minus; 1)b )</span>
+            </div>
+          </div>
+
+          <!-- Drag and Drop Matching 2: Sn Symbols (Page 14) -->
+          <div class="question-block">
+            <div class="question-prompt">
+              <span class="q-number">3</span>
+              <span><strong>Drag-and-Drop / Cocokkan Makna Simbol Rumus \(S_n\):</strong> Tarik kartu istilah di bawah dan letakkan pada kotak simbol rumus deret!</span>
+            </div>
+
+            <div class="dnd-container" data-dnd-id="dnd2">
+              <div class="dnd-header">
+                <span class="dnd-title"><i class="fas fa-hand-pointer"></i> Bank Pilihan Istilah Deret Aritmatika:</span>
+                <button type="button" class="dnd-reset-btn" data-reset-dnd="dnd2">
+                  <i class="fas fa-rotate-left"></i> Reset Kotak
+                </button>
+              </div>
+
+              <div class="draggable-bank" id="dnd2_bank">
+                <div class="drag-item" draggable="true" data-value="Jumlah n Suku" id="chip2_sn">
+                  <i class="fas fa-grip-vertical"></i> Jumlah n Suku Pertama
+                </div>
+                <div class="drag-item" draggable="true" data-value="Suku Ke-n" id="chip2_un">
+                  <i class="fas fa-grip-vertical"></i> Suku Ke-n
+                </div>
+                <div class="drag-item" draggable="true" data-value="Suku Pertama" id="chip2_a">
+                  <i class="fas fa-grip-vertical"></i> Suku Pertama (a)
+                </div>
+                <div class="drag-item" draggable="true" data-value="Beda" id="chip2_b">
+                  <i class="fas fa-grip-vertical"></i> Beda (b)
+                </div>
+                <div class="drag-item" draggable="true" data-value="Banyak Suku" id="chip2_n">
+                  <i class="fas fa-grip-vertical"></i> Banyak Suku (n)
+                </div>
+              </div>
+
+              <div class="drop-slots-grid" style="grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));">
+                <div class="drop-slot-card">
+                  <span class="slot-math-symbol">\( S_n \)</span>
+                  <div class="drop-zone" data-dnd-id="dnd2" data-slot-key="dnd2_sn">
+                    <span class="drop-placeholder">Arti simbol \(S_n\)</span>
+                  </div>
+                </div>
+
+                <div class="drop-slot-card">
+                  <span class="slot-math-symbol">\( U_n \)</span>
+                  <div class="drop-zone" data-dnd-id="dnd2" data-slot-key="dnd2_un">
+                    <span class="drop-placeholder">Arti simbol \(U_n\)</span>
+                  </div>
+                </div>
+
+                <div class="drop-slot-card">
+                  <span class="slot-math-symbol">\( a \)</span>
+                  <div class="drop-zone" data-dnd-id="dnd2" data-slot-key="dnd2_a">
+                    <span class="drop-placeholder">Arti simbol \(a\)</span>
+                  </div>
+                </div>
+
+                <div class="drop-slot-card">
+                  <span class="slot-math-symbol">\( b \)</span>
+                  <div class="drop-zone" data-dnd-id="dnd2" data-slot-key="dnd2_b">
+                    <span class="drop-placeholder">Arti simbol \(b\)</span>
+                  </div>
+                </div>
+
+                <div class="drop-slot-card">
+                  <span class="slot-math-symbol">\( n \)</span>
+                  <div class="drop-zone" data-dnd-id="dnd2" data-slot-key="dnd2_n">
+                    <span class="drop-placeholder">Arti simbol \(n\)</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Application to Service 10 -->
+          <div class="question-block">
+            <div class="question-prompt">
+              <span class="q-number">4</span>
+              <span>Gunakan rumus \(S_n\) untuk menghitung jumlah jarak tempuh sampai servis ke-10:</span>
+            </div>
+
+            <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 0.75rem;">
+              <div>
+                <label style="font-size: 0.8rem; font-weight: 700;">Nilai \(a\):</label>
+                <input type="text" class="interactive-input input-num" id="act5_a" placeholder="56.125">
+              </div>
+              <div>
+                <label style="font-size: 0.8rem; font-weight: 700;">Nilai \(b\):</label>
+                <input type="text" class="interactive-input input-num" id="act5_b" placeholder="10.000">
+              </div>
+              <div>
+                <label style="font-size: 0.8rem; font-weight: 700;">Nilai \(n\):</label>
+                <input type="text" class="interactive-input input-sm" id="act5_n" placeholder="10">
+              </div>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+              <strong>Hasil \( S_{10} \) = </strong>
+              <input type="text" class="interactive-input input-num" id="act5_s10" placeholder="1.011.250">
+              <span class="formula-unit">KM</span>
+            </div>
+          </div>
+
+          <div class="section-feedback-box" id="feedbackBoxAct5"></div>
+
+          <div class="section-footer-actions">
+            <button type="button" class="btn btn-check-section" id="btnCheckAct5">
+              <i class="fas fa-check"></i> Periksa Bagian Ini
+            </button>
+            <button type="button" class="btn btn-outline btn-sm" id="btnToggleExplAct5">
+              <i class="fas fa-lightbulb"></i> Kunci & Pembahasan
+            </button>
+          </div>
+
+          <div class="explanation-panel" id="explPanelAct5">
+            <h4><i class="fas fa-info-circle"></i> Pembahasan Aktivitas 5:</h4>
+            <div class="explanation-steps">
+              <ul>
+                <li><strong>Rumus Deret Aritmatika:</strong> \( S_n = \frac{n}{2}(2a + (n - 1)b) \) atau \( S_n = \frac{n}{2}(a + U_n) \).</li>
+                <li><strong>Jumlah KM Sampai Servis ke-10:</strong>
+                  <br>\( S_{10} = \frac{10}{2} \left[ 2(56.125) + (10 - 1)10.000 \right] \)
+                  <br>\( S_{10} = 5 \times [112.250 + 90.000] = 5 \times 202.250 = \mathbf{1.011.250\text{ KM}} \).
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Step Navigation Footer -->
+      <div class="wizard-nav-footer">
+        <button type="button" class="btn-wizard-prev" onclick="goToStep(6)">
+          <i class="fas fa-arrow-left"></i> Kembali ke Aktivitas 4
+        </button>
+        <button type="button" class="btn-wizard-next" onclick="goToStep(8)">
+          Lanjut ke Aktivitas 6 & Refleksi <i class="fas fa-arrow-right"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- =======================================================================
+         STEP 8: AKTIVITAS 6 - KASUS NYATA & REFLEKSI (Page 15)
+         ======================================================================= -->
+    <div class="wizard-step" id="step-8" data-step="8">
+      <section class="lkpd-card" id="section-act6">
+        <div class="lkpd-card-header">
+          <div class="header-title-box">
+            <span class="activity-badge"><i class="fas fa-car"></i> AKTIVITAS 6</span>
+            <h2 class="activity-title">Penerapan Kasus Nyata & Refleksi Mandiri</h2>
+          </div>
+          <span class="section-score-pill" id="scorePillAct6">0/20 Poin</span>
+        </div>
+        <div class="lkpd-card-body">
+          <div class="context-narrative">
+            <p>
+              <strong>Studi Kasus Baru di Bengkel:</strong>
+              Sebuah mobil operasional perusahaan melakukan servis pertama pada jarak tempuh <strong>30.000 KM</strong>. 
+              Mobil tersebut dijadwalkan melakukan servis berkala setiap pertambahan jarak tempuh <strong>10.000 KM</strong>.
+            </p>
+          </div>
+
+          <div class="question-block">
+            <div class="question-prompt">
+              <span class="q-number">1</span>
+              <span>Berdasarkan informasi di atas, tentukan nilai variabel aritmatika:</span>
+            </div>
+            <div style="display: flex; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 1rem;">
+              <div>
+                <label style="font-size: 0.8rem; font-weight: 700;">Jarak Tempuh Awal (\(a\)):</label>
+                <div style="display: flex; align-items: center; gap: 0.35rem; margin-top: 0.25rem;">
+                  <input type="text" class="interactive-input input-num" id="act6_a" placeholder="30.000">
+                  <span class="formula-unit">KM</span>
+                </div>
+              </div>
+              <div>
+                <label style="font-size: 0.8rem; font-weight: 700;">Interval Selisih Servis (\(b\)):</label>
+                <div style="display: flex; align-items: center; gap: 0.35rem; margin-top: 0.25rem;">
+                  <input type="text" class="interactive-input input-num" id="act6_b" placeholder="10.000">
+                  <span class="formula-unit">KM</span>
+                </div>
+              </div>
+              <div>
+                <label style="font-size: 0.8rem; font-weight: 700;">Servis Dituju (\(n\)):</label>
+                <div style="display: flex; align-items: center; gap: 0.35rem; margin-top: 0.25rem;">
+                  <input type="text" class="interactive-input input-sm" id="act6_n" placeholder="15">
+                </div>
+              </div>
+            </div>
+
+            <div class="question-prompt">
+              <span class="q-number">2</span>
+              <span>Berapa jarak tempuh mobil pada servis ke-15 (\(U_{15}\))?</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
+              <strong>\( U_{15} \) = </strong>
+              <input type="text" class="interactive-input input-num" id="act6_u15" placeholder="170.000">
+              <span class="formula-unit">KM</span>
+            </div>
+
+            <div class="question-prompt">
+              <span class="q-number">3</span>
+              <span>Berapa jumlah jarak tempuh yang tercatat dari servis pertama sampai servis ke-15 (\(S_{15}\))?</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+              <strong>\( S_{15} \) = </strong>
+              <input type="text" class="interactive-input input-num" id="act6_s15" placeholder="1.500.000">
+              <span class="formula-unit">KM</span>
+            </div>
+          </div>
+
+          <!-- Self Reflection & Conclusion Box -->
+          <div class="question-block">
+            <div class="question-prompt">
+              <span class="q-number"><i class="fas fa-feather"></i></span>
+              <span><strong>Refleksi & Kesimpulan Pembelajaran:</strong>
+              Setelah menyelesaikan seluruh aktivitas, apa perbedaan mendasar antara <strong>Barisan Aritmatika (\(U_n\))</strong> dan <strong>Deret Aritmatika (\(S_n\))</strong> dalam kehidupan nyata seorang mekanik?</span>
+            </div>
+            <textarea class="interactive-textarea" id="act6_reflection" style="min-height: 100px;" placeholder="Tuliskan kesimpulanmu secara mandiri (misal: Barisan aritmatika mencari suku/jarak tempuh pada servis tertentu Un, sedangkan Deret aritmatika menjumlahkan seluruh jarak tempuh hingga servis tertentu Sn)..."></textarea>
+          </div>
+
+          <div class="section-feedback-box" id="feedbackBoxAct6"></div>
+
+          <div class="section-footer-actions">
+            <button type="button" class="btn btn-check-section" id="btnCheckAct6">
+              <i class="fas fa-check"></i> Periksa Bagian Ini
+            </button>
+            <button type="button" class="btn btn-outline btn-sm" id="btnToggleExplAct6">
+              <i class="fas fa-lightbulb"></i> Kunci & Pembahasan
+            </button>
+          </div>
+
+          <div class="explanation-panel" id="explPanelAct6">
+            <h4><i class="fas fa-info-circle"></i> Pembahasan Aktivitas 6:</h4>
+            <div class="explanation-steps">
+              <ul>
+                <li><strong>Diketahui:</strong> \( a = 30.000 \), \( b = 10.000 \), \( n = 15 \).</li>
+                <li><strong>Menentukan KM Servis ke-15 (\(U_{15}\)):</strong>
+                  <br>\( U_{15} = a + (15 - 1)b = 30.000 + 14(10.000) = 30.000 + 140.000 = \mathbf{170.000\text{ KM}} \).
+                </li>
+                <li><strong>Menentukan Jumlah KM Sampai Servis ke-15 (\(S_{15}\)):</strong>
+                  <br>\( S_{15} = \frac{15}{2}(a + U_{15}) = 7{,}5 \times (30.000 + 170.000) = 7{,}5 \times 200.000 = \mathbf{1.500.000\text{ KM}} \).
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Step Navigation Footer -->
+      <div class="wizard-nav-footer">
+        <button type="button" class="btn-wizard-prev" onclick="goToStep(7)">
+          <i class="fas fa-arrow-left"></i> Kembali ke Aktivitas 5
+        </button>
+        <button type="button" class="btn-wizard-next" style="background: linear-gradient(135deg, #f59e0b, #d97706); color: #0f172a;" onclick="goToStep(9)">
+          Menuju Ringkasan & Kumpul <i class="fas fa-paper-plane"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- =======================================================================
+         STEP 9: STEP AKHIR - RINGKASAN JAWABAN & KUMPUL (Step Akhir)
+         ======================================================================= -->
+    <div class="wizard-step" id="step-9" data-step="9">
+      <section class="lkpd-card">
+        <div class="lkpd-card-header" style="background: linear-gradient(135deg, #1e3a8a, #0b192c);">
+          <div class="header-title-box">
+            <span class="activity-badge" style="background: var(--accent-gold); color: #0f172a;">
+              <i class="fas fa-clipboard-check"></i> STEP AKHIR
+            </span>
+            <h2 class="activity-title">Ringkasan Jawaban & Pengumpulan e-LKPD</h2>
+          </div>
+        </div>
+
+        <div class="lkpd-card-body">
+          <p style="font-size: 0.95rem; color: #334155; line-height: 1.6;">
+            Selamat! Kamu telah menyelesaikan seluruh rangkaian aktivitas pembelajaran e-LKPD Barisan dan Deret Aritmatika. 
+            Silakan periksa kembali ringkasan identitas dan status pengerjaanmu di bawah ini sebelum mengirimkan ke sistem Guru.
+          </p>
+
+          <!-- Student Metadata & Duration Summary Grid -->
+          <div class="summary-meta-grid">
+            <div class="summary-meta-item">
+              <div class="summary-meta-icon"><i class="fas fa-user-graduate"></i></div>
+              <div>
+                <span style="font-size: 0.75rem; color: #64748b; font-weight: 700;">NAMA LENGKAP:</span>
+                <div style="font-weight: 800; font-size: 1.05rem;" id="summaryStudentName">-</div>
+              </div>
+            </div>
+
+            <div class="summary-meta-item">
+              <div class="summary-meta-icon"><i class="fas fa-school"></i></div>
+              <div>
+                <span style="font-size: 0.75rem; color: #64748b; font-weight: 700;">KELAS / ABSEN:</span>
+                <div style="font-weight: 800; font-size: 1.05rem;" id="summaryStudentClass">-</div>
+              </div>
+            </div>
+
+            <div class="summary-meta-item">
+              <div class="summary-meta-icon"><i class="fas fa-stopwatch" style="color: #0284c7;"></i></div>
+              <div>
+                <span style="font-size: 0.75rem; color: #64748b; font-weight: 700;">DURASI PENGERJAAN:</span>
+                <div style="font-weight: 800; font-size: 1.05rem; color: #0284c7;" id="summaryStudentDuration">00:00</div>
+              </div>
+            </div>
+
+            <div class="summary-meta-item">
+              <div class="summary-meta-icon"><i class="fas fa-trophy" style="color: var(--accent-gold);"></i></div>
+              <div>
+                <span style="font-size: 0.75rem; color: #64748b; font-weight: 700;">ESTIMASI SKOR:</span>
+                <div style="font-weight: 800; font-size: 1.25rem; color: var(--accent-gold);" id="summaryStudentScore">0 / 100</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section Completion Status Table -->
+          <h4 style="color: var(--primary); font-size: 1rem; margin: 1.5rem 0 0.5rem 0;">
+            <i class="fas fa-list-check"></i> Status Tiap Aktivitas Lembar Kerja:
+          </h4>
+          <div class="table-responsive">
+            <table class="summary-table">
+              <thead>
+                <tr>
+                  <th style="width: 50px;">No</th>
+                  <th>Aktivitas Pembelajaran</th>
+                  <th>Topik Matematis PMR</th>
+                  <th>Bobot Skor</th>
+                  <th>Status Pengisian</th>
+                </tr>
+              </thead>
+              <tbody id="summaryTableBody">
+                <!-- Dynamically populated by JS -->
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Submission Status Banner -->
+          <div class="submission-status-alert" id="submissionAlert">
+            <i class="fas fa-check-circle" style="font-size: 1.5rem;" id="submissionAlertIcon"></i>
+            <div>
+              <strong id="submissionAlertTitle">Berhasil!</strong>
+              <p id="submissionAlertMsg" style="font-size: 0.9rem; margin-top: 0.25rem;"></p>
+            </div>
+          </div>
+
+          <!-- Master Action Bar -->
+          <div class="master-submit-card" style="margin-top: 1.5rem; background: linear-gradient(145deg, #0b192c, #1e3e62);">
+            <i class="fas fa-cloud-arrow-up" style="font-size: 2.75rem; color: var(--accent-gold); margin-bottom: 0.5rem;"></i>
+            <h3>Kirim Lembar Kerja ke Guru Sekarang?</h3>
+            <p>
+              Data identitas, durasi pengerjaan, seluruh isian jawaban, dan total skormu akan disimpan langsung ke database server sekolah.
+            </p>
+            <div class="master-actions">
+              <button type="button" class="btn btn-gold" id="btnSubmitToBackend">
+                <i class="fas fa-paper-plane"></i> Kirim Jawaban ke Guru
+              </button>
+              <button type="button" class="btn btn-outline" style="color: #fff; border-color: rgba(255,255,255,0.4);" onclick="window.print();">
+                <i class="fas fa-print"></i> Cetak / Simpan PDF
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Step Navigation Footer -->
+      <div class="wizard-nav-footer">
+        <button type="button" class="btn-wizard-prev" onclick="goToStep(8)">
+          <i class="fas fa-arrow-left"></i> Kembali ke Aktivitas 6
+        </button>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- =========================================================================
+       MODAL: EVALUATION REPORT & CERTIFICATE
+       ========================================================================= -->
+  <div class="modal-backdrop" id="gradingModal">
+    <div class="report-modal">
+      <div class="report-header">
+        <button type="button" class="close-btn" id="btnCloseReportModal">&times;</button>
+        <i class="fas fa-award report-badge-icon" id="reportBadgeIcon"></i>
+        <h2 style="font-size: 1.5rem; margin-bottom: 0.25rem;">Laporan Hasil e-LKPD</h2>
+        <p style="color: #cbd5e1; font-size: 0.9rem;">Barisan dan Deret Aritmatika Berbasis PMR (Konteks Pergantian Oli)</p>
+      </div>
+
+      <div class="report-body">
+        <!-- Score Circular Ring -->
+        <div class="report-score-ring" id="reportScoreRing">
+          <div class="report-score-text" id="reportScoreNumber">0</div>
+        </div>
+
+        <p style="text-align: center; font-size: 1.1rem; font-weight: 800; color: var(--primary);" id="reportBadgeTitle">
+          Mekanik Ahli Matematika
+        </p>
+
+        <!-- Student Metadata -->
+        <div class="report-student-meta">
+          <div><strong>Nama:</strong> <span id="modalStudentName">-</span></div>
+          <div><strong>Kelas:</strong> <span id="modalStudentClass">-</span></div>
+          <div><strong>No. Absen:</strong> <span id="modalStudentAbsent">-</span></div>
+          <div><strong>Waktu Selesai:</strong> <span id="modalTimestamp">-</span></div>
+        </div>
+
+        <!-- Breakdown List -->
+        <h4 style="font-size: 0.95rem; margin-bottom: 0.5rem; color: var(--neutral-700);">
+          <i class="fas fa-list-check"></i> Rincian Nilai Tiap Aktivitas:
+        </h4>
+        <ul class="report-breakdown-list" id="modalBreakdownList"></ul>
+      </div>
+
+      <div class="report-footer">
+        <button type="button" class="btn btn-outline" onclick="document.getElementById('gradingModal').classList.remove('show');">
+          Tutup
+        </button>
+        <button type="button" class="btn btn-primary" id="btnPrintReport">
+          <i class="fas fa-print"></i> Cetak Sertifikat / Simpan PDF
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       MODAL: IMAGE LIGHTBOX PREVIEW
+       ========================================================================= -->
+  <div class="modal-backdrop" id="imageLightboxModal">
+    <div style="background: #0f172a; padding: 1.5rem; border-radius: var(--radius-lg); max-width: 950px; width: 95%; max-height: 92vh; display: flex; flex-direction: column; align-items: center; position: relative; box-shadow: var(--shadow-lg); border: 2px solid var(--accent-gold);">
+      <button type="button" class="close-btn" id="btnCloseLightbox" style="position: absolute; top: 12px; right: 15px; color: #fff; font-size: 1.8rem; background: rgba(255,255,255,0.15); border: none; border-radius: 50%; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s;">&times;</button>
+      <h3 id="lightboxTitle" style="color: #fff; font-size: 1.15rem; margin-bottom: 0.85rem; text-align: center; display: flex; align-items: center; gap: 0.5rem;">
+        <i class="fas fa-magnifying-glass-plus" style="color: var(--accent-gold);"></i> Pratinjau Dokumen
+      </h3>
+      <div style="flex: 1; overflow: auto; display: flex; justify-content: center; align-items: center; width: 100%; min-height: 250px;">
+        <img id="lightboxImg" src="" alt="Zoom Dokumen" style="max-width: 100%; max-height: 72vh; object-fit: contain; border-radius: var(--radius-sm); box-shadow: 0 4px 25px rgba(0,0,0,0.8); background: #fff;">
+      </div>
+      <p style="color: #94a3b8; font-size: 0.85rem; margin-top: 0.75rem; text-align: center;">
+        <i class="fas fa-info-circle"></i> Gunakan scroll atau klik tombol silang / klik di luar area untuk menutup.
+      </p>
+    </div>
+  </div>
+
+  <!-- JavaScript Controller -->
+  <script src="js/app.js"></script>
+</body>
+</html>
